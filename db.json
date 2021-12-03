@@ -48,9 +48,19 @@
   ],
   "comments": [
     {
-      "body": "НОвинки",
+      "body": "НОвинка",
       "postId": 1,
       "id": 1
+    },
+    {
+      "body": "1223",
+      "postId": 1,
+      "id": 2
+    },
+    {
+      "body": "3456",
+      "postId": 1,
+      "id": 3
     }
   ],
   "profile": {

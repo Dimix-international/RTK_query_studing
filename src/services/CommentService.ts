@@ -8,7 +8,7 @@ export const commentAPI = createApi({
         fetchBaseQuery({
             baseUrl: 'http://localhost:5000/',
         }),
-    tagTypes: ['Comments'],
+    tagTypes: ['Comments', 'Comment'],
     endpoints: (build) => ({
         getAllComments: build.query<ICommentType[], string>({
             query: (limit: string = '') => ({
@@ -36,7 +36,7 @@ export const commentAPI = createApi({
             query:(id: number) => ({
                 url: `/comments/${id}`,
             }),
-            providesTags: ['Comments'],
+            providesTags: result => ['Comments'],
         }),
         addComment: build.mutation<void, ICommentType>({ //void - любой параметр
             query: (comment: ICommentType) => ({
@@ -53,7 +53,7 @@ export const commentAPI = createApi({
                 method: 'PUT',
                 body: rest
             }),
-            invalidatesTags: [{type: 'Comments', id: 'LIST'}]
+           invalidatesTags: [{type: 'Comments', id: 'LIST'}]
         }),
         deleteComment: build.mutation<void, number>({
             query: (id: number) => ({

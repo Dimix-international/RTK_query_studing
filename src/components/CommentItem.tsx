@@ -20,7 +20,8 @@ export const CommentItem: React.FC<PostItemType> = ({
                                                         isUpdatingComment
                                                     }) => {
 
-    const {data} = useGetCommentQuery(id);
+    const {data, isFetching} = useGetCommentQuery(id);
+    console.log(data)
 
     const updateComment = (text: string) => {
 
@@ -30,7 +31,8 @@ export const CommentItem: React.FC<PostItemType> = ({
     return (
         <div style={{border: '2px solid grey', padding: 5, marginBottom: 10}}>
             <EditableSpan text={comment.body}
-                          callback={(text: string) => updateComment(text)} isUpdatingComment={isUpdatingComment}/>
+                          callback={(text: string) => updateComment(text)}
+                          isUpdatingComment={isUpdatingComment}/>
             <button disabled={disableBnt}
                     onClick={() => deleteComment(comment.id)}>delete
             </button>

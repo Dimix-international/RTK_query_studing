@@ -57,13 +57,13 @@ export const CommentsContainer = () => {
     const handleUpdateComment = async (comment:ICommentType) => {
         dispatch(commentInProgress({id: comment.id, isFetching: true}))
         await updateComment(comment).unwrap();
+
         dispatch(commentInProgress({id: comment.id, isFetching: false}))
     }
 
     if (isLoading) {
         return <div>loading ...</div>
     }
-
 
 
     return (
@@ -94,9 +94,9 @@ export const CommentsContainer = () => {
                         id={comment.id}
                         comment={comment}
                         deleteComment={handleDeleteComment}
-                        disableBnt={isFetching || (actionsInProgress && actionsInProgress.some(elId => elId === comment.id))}
+                        disableBnt={(actionsInProgress && actionsInProgress.some(elId => elId === comment.id))}
                         handleUpdateComment={handleUpdateComment}
-                        isUpdatingComment={ isFetching || (actionsInProgress && actionsInProgress.some(elId => elId === comment.id))}
+                        isUpdatingComment={actionsInProgress && actionsInProgress.some(elId => elId === comment.id)}
                     />
                 ))
             )}
