@@ -3,7 +3,7 @@ import {
     useGetAllCommentsQuery, useUpdateCommentMutation
 } from "../services/CommentService";
 import {CommentItem} from "./CommentItem";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {ICommentType} from "../models/IComment";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {commentInProgress} from "../store/reducers/CommentSlice";
@@ -24,6 +24,8 @@ export const CommentsContainer = () => {
         isSuccess,
     } = useGetAllCommentsQuery(count);
 
+
+
     const [addNewComment, {
         error: newCommentError,
         isLoading: isLoadingAddingComment,
@@ -42,6 +44,7 @@ export const CommentsContainer = () => {
             setNewComment('');
         }
     }
+    const[idC, setIdC] = useState<null | number>(null);
 
     const [deleteComment] = useDeleteCommentMutation();
     const [updateComment] = useUpdateCommentMutation();
@@ -57,9 +60,13 @@ export const CommentsContainer = () => {
     const handleUpdateComment = async (comment:ICommentType) => {
         dispatch(commentInProgress({id: comment.id, isFetching: true}))
         await updateComment(comment).unwrap();
-
-        dispatch(commentInProgress({id: comment.id, isFetching: false}))
+        setIdC(comment.id)
     }
+    useEffect(() => {
+        if(!isFetching && idC) {
+            dispatch(commentInProgress({id: idC, isFetching: false}))
+        }
+    },[isFetching, idC, dispatch] )
 
     if (isLoading) {
         return <div>loading ...</div>

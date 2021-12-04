@@ -36,7 +36,8 @@ export const commentAPI = createApi({
             query:(id: number) => ({
                 url: `/comments/${id}`,
             }),
-            providesTags: result => ['Comments'],
+            providesTags: (result,arg) => [{type: 'Comments', id: 'LIST'}],
+           // providesTags: (result,arg) => [{type: 'Comments', id: `${arg}`}],
         }),
         addComment: build.mutation<void, ICommentType>({ //void - любой параметр
             query: (comment: ICommentType) => ({

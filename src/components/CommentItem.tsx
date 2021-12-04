@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {ICommentType} from "../models/IComment";
 import {useGetCommentQuery} from "../services/CommentService";
 import {EditableSpan} from "./EditableSpan";
@@ -20,8 +20,6 @@ export const CommentItem: React.FC<PostItemType> = ({
                                                         isUpdatingComment
                                                     }) => {
 
-    const {data, isFetching} = useGetCommentQuery(id);
-    console.log(data)
 
     const updateComment = (text: string) => {
 
@@ -30,7 +28,7 @@ export const CommentItem: React.FC<PostItemType> = ({
 
     return (
         <div style={{border: '2px solid grey', padding: 5, marginBottom: 10}}>
-            <EditableSpan text={comment.body}
+            <EditableSpan text={comment.body || ''}
                           callback={(text: string) => updateComment(text)}
                           isUpdatingComment={isUpdatingComment}/>
             <button disabled={disableBnt}
